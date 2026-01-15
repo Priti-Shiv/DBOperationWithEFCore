@@ -1,4 +1,6 @@
 
+using Microsoft.EntityFrameworkCore;
+
 namespace DBOperationWithEFCore
 {
     public class Program
@@ -6,6 +8,8 @@ namespace DBOperationWithEFCore
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            builder.Services.AddDbContext<Data.AppDBContext>(options =>
+               options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             // Add services to the container.
 
@@ -15,6 +19,7 @@ namespace DBOperationWithEFCore
             builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
+           
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
